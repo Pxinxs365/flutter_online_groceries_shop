@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:online_groceries/model/offer_product_model.dart';
 import 'package:online_groceries/view/home/product_details_view.dart';
 
 import '../../common/color_extension.dart';
 import '../../common_widget/category_cell.dart';
 import '../../common_widget/product_cell.dart';
 import '../../common_widget/section_view.dart';
+import '../../domain/get_main_page_data_use_case.dart';
+import '../../domain/repositories/get_main_page_data_repository.dart';
 import '../../view_model/cart_view_model.dart';
 import '../../view_model/home_view_model.dart';
 
@@ -20,7 +21,9 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   TextEditingController txtSearch = TextEditingController();
 
-  final homeVM = Get.put(HomeViewModel());
+  final HomeViewModel homeVM = Get.put(HomeViewModel(
+    GetMainPageDataUseCase(Get.find<IGetMainPageDataRepository>()),
+  ));
 
   @override
   void dispose() {
@@ -134,9 +137,9 @@ class _HomeViewState extends State<HomeView> {
                   () => ListView.builder(
                       scrollDirection: Axis.horizontal,
                       padding: const EdgeInsets.symmetric(horizontal: 15),
-                      itemCount: homeVM.offerArr.length,
+                      itemCount: homeVM.mainPageData.value.offerArr.length,
                       itemBuilder: (context, index) {
-                        var pObj = homeVM.offerArr[index] ;
+                        var pObj = homeVM.mainPageData.value.offerArr[index];
 
                         return ProductCell(
                           pObj: pObj,
@@ -168,9 +171,9 @@ class _HomeViewState extends State<HomeView> {
                   () => ListView.builder(
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.symmetric(horizontal: 15),
-                    itemCount: homeVM.bestSellingArr.length,
+                    itemCount: homeVM.mainPageData.value.bestSellingArr.length,
                     itemBuilder: (context, index) {
-                      var pObj = homeVM.bestSellingArr[index];
+                      var pObj = homeVM.mainPageData.value.bestSellingArr[index];
 
                       return ProductCell(
                         pObj: pObj,
@@ -200,9 +203,9 @@ class _HomeViewState extends State<HomeView> {
                   () =>  ListView.builder(
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.symmetric(horizontal: 15),
-                    itemCount: homeVM.groceriesArr.length,
+                    itemCount: homeVM.mainPageData.value.groceriesArr.length,
                     itemBuilder: (context, index) {
-                      var pObj = homeVM.groceriesArr[index];
+                      var pObj = homeVM.mainPageData.value.groceriesArr[index];
 
                       return CategoryCell(
                         pObj: pObj,
@@ -219,9 +222,9 @@ class _HomeViewState extends State<HomeView> {
                   () => ListView.builder(
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.symmetric(horizontal: 15),
-                    itemCount: homeVM.listArr.length,
+                    itemCount: homeVM.mainPageData.value.listArr.length,
                     itemBuilder: (context, index) {
-                      var pObj = homeVM.listArr[index] ;
+                      var pObj = homeVM.mainPageData.value.listArr[index] ;
 
                       return ProductCell(
                         pObj: pObj,

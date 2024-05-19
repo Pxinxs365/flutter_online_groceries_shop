@@ -3,18 +3,23 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:online_groceries/view/main_tabview/main_tabview.dart';
 import 'package:online_groceries/view/splash_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'common/color_extension.dart';
 import 'common/my_http_overrides.dart';
+import 'data/get_main_page_data_repository.dart';
+import 'domain/repositories/get_main_page_data_repository.dart';
 
 SharedPreferences? prefs;
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   prefs = await SharedPreferences.getInstance();
+
+  // DI
+  Get.lazyPut<IGetMainPageDataRepository>(() => GetMainPageDataRepository(), fenix: true);
+
   runApp(const MyApp());
 }
 

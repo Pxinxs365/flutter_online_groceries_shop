@@ -60,7 +60,7 @@ class SignUpViewModel extends GetxController {
         Globs.udSet(payload, Globs.userPayload);
         Globs.udBoolSet(true, Globs.userLogin);
 
-        
+
         Get.delete<SignUpViewModel>();
         Get.find<SplashViewModel>().goAfterLoginMainTab();
       } else {}
@@ -70,6 +70,10 @@ class SignUpViewModel extends GetxController {
       Globs.hideHUD();
       Get.snackbar(Globs.appName, err.toString());
     });
+
+    // TODO: Remove this easy navigation to main screen after complete
+    //  integration with Sign In/Sign Up
+    Get.find<SplashViewModel>().goAfterLoginMainTab();
   }
 
   void showPassword() {
